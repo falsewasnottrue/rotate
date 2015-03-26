@@ -3,18 +3,20 @@ package rotate
 sealed trait Slot {
   def name: String
 }
-object * extends Slot {
+object Empty extends Slot {
   val name = "."
 }
-object R extends Slot {
+object Red extends Slot {
   val name = "R"
 }
-object B extends Slot {
+object Blue extends Slot {
   val name = "B"
 }
 
 case class Board(slots: Array[Array[Slot]]) {
+  
   def rotate: Board = ???
+  
   def gravity: Board = ???
 
   override def toString = slots.foldLeft("")((acc, row) => {
@@ -26,9 +28,9 @@ object Board {
   def create(slist: List[String]): Board =
     Board(slist.map(s => {
       s.toCharArray.map(c => c match {
-        case '.' => *
-        case 'R' => R
-        case 'B' => B
+        case '.' => Empty
+        case 'R' => Red
+        case 'B' => Blue
       })
     }).toArray)
 }
@@ -45,9 +47,9 @@ object Rotate extends App {
     ".RBBR.." :: Nil)
   println(b)
 
-//  val r = b.rotate
-//  println(r)
-//
+  val r = b.rotate
+  println(r)
+
 //  val g = r.gravity
 //  println(g)
 }
