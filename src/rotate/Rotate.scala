@@ -34,42 +34,8 @@ object Board {
 
 object Rotate extends App {
 
-  val b = Board.create(
-    "......." ::
-      "......." ::
-      "......." ::
-      "...R..." ::
-      "...RB.." ::
-      "..BRB.." ::
-      ".RBBR.." :: Nil)
-  println(b)
-  println(b(3, 3))
 
-  val r = rotate(b)
-  println(r)
 
-  // expected
-  //  .......
-  //  R......
-  //  BB.....
-  //  BRRR...
-  //  RBB....
-  //  .......
-  //  .......
-
-  val g = gravity(r)
-  println(g)
-
-  // expected
-  //  .......
-  //  .......
-  //  .......
-  //  R......
-  //  BB.....
-  //  BRR....
-  //  RBBR...
-
-  println(winners(b, 2))
   def rotate(b: Board): Board = {
     val n = b.slots.length
     val ss = Array.ofDim[Slot](n, n)
@@ -90,9 +56,20 @@ object Rotate extends App {
     rotate(rotate(rotate(Board(ss))))
   }
 
+  def diagonals(b: Board): Board =
+    Board((for {
+      i <- 0 until b.slots.length
+      diagonal = (for {
+        j <- 0 to i
+      } yield b.slots(i-j)(j)).toArray
+    } yield diagonal).toArray)
+
   def winners(b: Board, k: Integer): List[Slot] = {
-    // val diagonals = duh
-    val all = b.toString + "#" + rotate(b).toString
+    val all = b.toString + "#" + rotate(b).toString +
+      "#" + diagonals(b).toString +
+      "#" + diagonals(rotate(b)).toString +
+      "#" + diagonals(rotate(rotate(b))).toString +
+      "#" + diagonals(rotate(rotate(rotate(b)))).toString
 
     for {
       x <- Blue :: Red :: Nil
