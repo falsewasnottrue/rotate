@@ -14,11 +14,6 @@ object Blue extends Slot {
 }
 
 case class Board(slots: Array[Array[Slot]]) {
-  
-  def rotate: Board = ???
-  
-  def gravity: Board = ???
-
   override def toString = slots.foldLeft("")((acc, row) => {
     acc + row.foldLeft("")((a, s) => a + s.name) + '\n'
   })
@@ -47,9 +42,16 @@ object Rotate extends App {
     ".RBBR.." :: Nil)
   println(b)
 
-  val r = b.rotate
-  println(r)
+//  val r = rotate(b)
+//  println(r)
 
 //  val g = r.gravity
 //  println(g)
+
+  def rotate(b: Board): Board = ???
+
+  def gravity(b: Board): Board = ???
+
+  def winner(b: Board): Option[Slot] = ???
+
 }
